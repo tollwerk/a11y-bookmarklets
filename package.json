@@ -1,0 +1,32 @@
+{
+    "name": "a11y-bookmarklets",
+    "version": "1.0.0",
+    "description": "Useful bookmarklets to for accesibility testing",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint-js": "eslint --fix --no-error-on-unmatched-pattern src/js/**/*.js "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tollwerk/a11y-bookmarklets.git"
+    },
+    "author": "Joschi Kuphal <joschi@tollwerk.de>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tollwerk/a11y-bookmarklets/issues"
+    },
+    "homepage": "https://github.com/tollwerk/a11y-bookmarklets#readme",
+    "devDependencies": {
+        "gulp": "^4.0.2",
+        "eslint": "^8.13.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-react": "^7.29.4",
+        "gulp-rename": "^2.0.0",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "gulp-uglify": "^3.0.2",
+        "typescript": "^4.6.3"
+    }
+}
