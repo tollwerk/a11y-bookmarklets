@@ -1,6 +1,7 @@
 (function iefe(d) {
-    const ua = navigator.userAgent.toLowerCase()
-    const ie = (ua.indexOf('msie') != -1) ? ua.substr(ie + 5, 1) : 0;
+    const ua = navigator.userAgent.toLowerCase();
+    const iepos = ua.indexOf('msie');
+    const ie = (iepos !== -1) ? ua.substr(iepos + 5, 1) : 0;
     const outlineProp = (ie < 8) ? 'border' : 'outline';
     let activeItem = null;
 
