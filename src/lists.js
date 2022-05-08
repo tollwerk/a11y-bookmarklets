@@ -14,18 +14,18 @@
         el.appendChild(createSpan(str2, 'closeSpan'));
     }
 
-    d[q]('strong.openSpan,strong.closeSpan').forEach(e => e.remove());
-    d[q]('ul,ol,dl').forEach(e => {
+    d[q]('strong.openSpan,strong.closeSpan').forEach((e) => e.remove());
+    d[q]('ul,ol,dl').forEach((e) => {
         e.setAttribute('style', 'outline:green 2px solid;padding:2px;list-style-position: inside;');
     });
-    d[q]('ul>p,ol>p').forEach(p => {
+    d[q]('ul>p,ol>p').forEach((p) => {
         p.setAttribute('style', 'outline:2px solid red;');
         p.parentNode.setAttribute('style', 'outline:2px solid red;');
         wrapInner(p.parentNode, '❌NO CHILD LI');
     });
-    const icons = { 'UL': '📝', 'OL': '🔢', 'DL': '📕' };
+    const icons = { UL: '📝', OL: '🔢', DL: '📕' };
     const lists = d[q]('ul,ol,dl,li,dd,dt');
-    lists.forEach(l => {
+    lists.forEach((l) => {
         const icon = icons[l.tagName] || '';
         wrapInner(l, `<${l.tagName.toLowerCase()}>${icon}`, `</${l.tagName.toLowerCase()}>`);
     });
