@@ -23,7 +23,10 @@ gulp.task('html', function () {
                 }).replace(/^(.)/g, function (match, chr) {
                     return chr.toUpperCase();
                 });
-                return `<li><a href="javascript:${encodeURI(file.contents.toString('utf8'))}">${name}</a></li>`;
+                const code = file.contents.toString('utf8').replace(/^!(.*)(\(.*?\);?)$/g, function (match, b, c) {
+                    return `(${b})${c}`;
+                });
+                return `<li><a href="javascript:${encodeURI(code)}">${name}</a></li>`;
             }
         }))
         .pipe(gulp.dest('./docs'));
