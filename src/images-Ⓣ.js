@@ -1,19 +1,24 @@
 (function iefe(d, h, g, s) {
+    const css = 'color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation';
+
     function createInfo(el, pos, str, cls, stl) {
         const info = d.createElement('span');
         info.className = cls;
-        info[s]('style', `color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation;${stl}`);
+        info[s]('style', `${css};${stl}`);
         info.textContent = str;
         switch (pos) {
-        case 0:
-            el.parentNode.insertBefore(info, el);
-            break;
-        case 1:
-            el.parentNode.insertBefore(info, el.nextSibling);
-            break;
-        case 2:
-            el.insertBefore(info, el.firstChild);
-            break;
+            case 0:
+                el.parentNode.insertBefore(info, el);
+                break;
+            case 1:
+                el.parentNode.insertBefore(info, el.nextSibling);
+                break;
+            case 2:
+                el.insertBefore(info, el.firstChild);
+                break;
+            case 3:
+                el.appendChild(info);
+                break;
         }
         return info;
     }
