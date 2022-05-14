@@ -1,4 +1,4 @@
-(function iefe(w, d, q, h, g, s) {
+(function iefe( d, q, h, g, s) {
     const css = 'color:black;font-weight:bold;font-family:sans-serif;font-size:small;background-color:yellow;speak:literal-punctuation';
 
     function createInfo(el, pos, str, cls, stl) {
@@ -25,95 +25,95 @@
 
     d[q]('span.openSpan,span.closeSpan,span.inputSpan').forEach((e) => e.remove());
     d[q]('table,[role=grid]').forEach((e) => {
-        e.setAttribute('style', 'outline:2px solid olive;');
+        e[s]('style', 'outline:2px solid olive;');
     });
     d[q]('caption').forEach((e) => {
-        e.setAttribute('style', 'outline:green 2px solid;padding:2px');
+        e[s]('style', 'outline:green 2px solid;padding:2px');
         createInfo(e, 2, `<caption>🎓`, 'openSpan', 'padding:1px;z-index:2147483647');
         createInfo(e, 3, `</caption>`, 'closeSpan');
     });
     d[q]('th').forEach((e) => {
-        e.setAttribute('style', 'outline:green 2px solid;padding:2px');
+        e[s]('style', 'outline:green 2px solid;padding:2px');
         const attrs = [];
         let suffix = '♿';
-        if (e.hasAttribute('scope')) {
+        if (e[h]('scope')) {
             suffix = '';
-            const scope = e.getAttribute('scope');
+            const scope = e[g]('scope');
             attrs.push(`♿scope="${scope}"${(scope === 'row' ? '🚣' : '👇')}`);
-            if (e.hasAttribute('id')) {
-                attrs.push(` id="${e.getAttribute('id')}"`);
-            } else if (e.hasAttribute('role')) {
-                attrs.push(`♿role="${e.getAttribute('role')}"`);
+            if (e[h]('id')) {
+                attrs.push(` id="${e[g]('id')}"`);
+            } else if (e[h]('role')) {
+                attrs.push(`♿role="${e[g]('role')}"`);
             }
-        } else if (e.hasAttribute('headers')) {
+        } else if (e[h]('headers')) {
             suffix = '';
-            attrs.push(`♿headers="${e.getAttribute('headers')}"`);
-            if (e.hasAttribute('id')) {
-                attrs.push(` id="${e.getAttribute('id')}"`);
+            attrs.push(`♿headers="${e[g]('headers')}"`);
+            if (e[h]('id')) {
+                attrs.push(` id="${e[g]('id')}"`);
             }
-        } else if (e.hasAttribute('id')) {
-            attrs.push(` id="${e.getAttribute('id')}"`);
-        } else if (e.hasAttribute('role')) {
+        } else if (e[h]('id')) {
+            attrs.push(` id="${e[g]('id')}"`);
+        } else if (e[h]('role')) {
             suffix = '';
-            attrs.push(`♿role="${e.getAttribute('role')}"`);
+            attrs.push(`♿role="${e[g]('role')}"`);
         }
         createInfo(e, 2, `<th${attrs.join(' ')}>${suffix}`, 'closeSpan', 'margin:0 2px;padding:2px');
     });
     d[q]('td').forEach((e) => {
-        e.setAttribute('style', 'outline:orange 2px dashed;padding:2px;');
+        e[s]('style', 'outline:orange 2px dashed;padding:2px;');
         const attrs = [];
-        if (e.hasAttribute('headers')) {
-            attrs.push(`♿headers="${e.getAttribute('headers')}"`);
-            if (e.hasAttribute('role')) {
-                attrs.push(`♿role="${e.getAttribute('role')}"`);
+        if (e[h]('headers')) {
+            attrs.push(`♿headers="${e[g]('headers')}"`);
+            if (e[h]('role')) {
+                attrs.push(`♿role="${e[g]('role')}"`);
             }
-        } else if (e.hasAttribute('role')) {
-            attrs.push(`♿role="${e.getAttribute('role')}"`);
+        } else if (e[h]('role')) {
+            attrs.push(`♿role="${e[g]('role')}"`);
         }
         createInfo(e, 2, `<td${attrs.join(' ')}>`, 'closeSpan', 'margin:0 2px;padding:2px');
     });
     d[q]('table').forEach((e) => {
         const attrs = [];
-        if (e.hasAttribute('summary')) {
-            attrs.push(`♿summary="${e.getAttribute('summary')}"`);
-        } else if (e.hasAttribute('aria-label')) {
-            attrs.push(`♿aria-label="${e.getAttribute('aria-label')}"`);
-        } else if (e.hasAttribute('aria-labelledby')) {
-            attrs.push(`♿aria-labelledby="${e.getAttribute('aria-labelledby')}"`);
-            const labelledbyValue = e.getAttribute('aria-labelledby');
+        if (e[h]('summary')) {
+            attrs.push(`♿summary="${e[g]('summary')}"`);
+        } else if (e[h]('aria-label')) {
+            attrs.push(`♿aria-label="${e[g]('aria-label')}"`);
+        } else if (e[h]('aria-labelledby')) {
+            attrs.push(`♿aria-labelledby="${e[g]('aria-labelledby')}"`);
+            const labelledbyValue = e[g]('aria-labelledby');
             const labelledbyArray = labelledbyValue.split(' ');
             for (let i = 0; i < labelledbyArray.length; ++i) {
                 d[q](`[id="${labelledbyArray[i]}"]`).forEach((id) => {
-                    id.setAttribute('style', 'outline:orange 2px dashed');
+                    id[s]('style', 'outline:orange 2px dashed');
                     createInfo(id, 2, `id="${labelledbyArray[i]}"`, 'inputSpan', 'padding:1px;outline:orange 2px dashed;z-index:2147483647');
                 });
             }
-        } else if (e.getAttribute('role') === 'presentation') {
+        } else if (e[g]('role') === 'presentation') {
             attrs.push('♿role="presentation"');
         }
         createInfo(e, 0, `<table${attrs.join(' ')}>`, 'closeSpan', 'margin:0 2px;padding:2px');
     });
     d[q]('[role=grid]').forEach((e) => {
         const attrs = ['♿role="grid"'];
-        if (e.hasAttribute('aria-readonly')) {
-            if (e.hasAttribute('aria-labelledby')) {
-                attrs.push(`♿aria-labelledby="${e.getAttribute('aria-labelledby')}"`);
-            } else if (e.hasAttribute('aria-label')) {
-                attrs.push(`♿aria-label="${e.getAttribute('aria-label')}"`);
+        if (e[h]('aria-readonly')) {
+            if (e[h]('aria-labelledby')) {
+                attrs.push(`♿aria-labelledby="${e[g]('aria-labelledby')}"`);
+            } else if (e[h]('aria-label')) {
+                attrs.push(`♿aria-label="${e[g]('aria-label')}"`);
             }
-            attrs.push(`♿aria-readonly="${e.getAttribute('aria-readonly')}"`);
+            attrs.push(`♿aria-readonly="${e[g]('aria-readonly')}"`);
         }
         createInfo(e, 0, attrs.join(' '), 'closeSpan', 'margin:0 2px;padding:2px');
     });
     d[q]('tr[role]').forEach((e) => {
-        createInfo(e, 0, `<tr♿role="${e.getAttribute('role')}">`, 'closeSpan', 'margin:0 2px;padding:2px');
+        createInfo(e, 0, `<tr♿role="${e[g]('role')}">`, 'closeSpan', 'margin:0 2px;padding:2px');
     });
     d[q]('td[headers],th[headers]').forEach((e) => {
-        const describedbyValue = e.getAttribute('headers');
+        const describedbyValue = e[g]('headers');
         const describedbyArray = describedbyValue.split(' ');
         for (let i = 0; i < describedbyArray.length; ++i) {
             if (!d.getElementById(describedbyArray[i])) {
-                e.setAttribute('style', 'outline:red 2px dotted;padding:2px');
+                e[s]('style', 'outline:red 2px dotted;padding:2px');
                 createInfo(e, 3, '❌NO ID MATCH', 'closeSpan');
                 break;
             }
@@ -138,4 +138,4 @@
         setTimeout(() => status.remove(), 3000);
     }
 
-}(window, document, 'querySelectorAll', 'hasAttribute', 'getAttribute', 'setAttribute'));
+})(document, 'querySelectorAll', 'hasAttribute', 'getAttribute', 'setAttribute');
