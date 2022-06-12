@@ -1,14 +1,24 @@
 const gulp = require('gulp');
 const typescript = require('gulp-typescript');
+const webpack = require('webpack-stream');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const inject = require('gulp-inject');
 const path = require('path');
+const named = require('vinyl-named');
 
 gulp.task('js', function () {
     return gulp.src('src/*.js')
         .pipe(typescript({ target: 'ES5', allowJs: true }))
         .pipe(uglify())
+        .pipe(rename(path => path.basename += '.min'))
+        .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('webpack', function () {
+    return gulp.src('src/pack/*.js')
+        .pipe(named())
+        .pipe(webpack({ mode: 'production' }))
         .pipe(rename(path => path.basename += '.min'))
         .pipe(gulp.dest('./dist'));
 });
@@ -35,7 +45,8 @@ gulp.task('html', function () {
 // Register Gulp watch task
 gulp.task('watch', function () {
     gulp.watch('src/*.js', gulp.series(['js', 'html']));
+    gulp.watch('src/pack/*.js', gulp.series(['webpack', 'html']));
 });
 
 // Register Gulp default task
-gulp.task('default', gulp.series(['js', 'html']));
+gulp.task('default', gulp.series(['js', 'webpack', 'html']));
