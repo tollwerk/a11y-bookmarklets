@@ -15,12 +15,12 @@ const css = {
  * @param {String} stl CSS style string
  * @return {Object}
  */
-const parseStyleString = function parseStyleString(stl) {
+const styleToObject = function styleToObject(stl) {
     const stlCss = {};
     stl.split(';').forEach(sel => {
         if (sel.trim().length) {
             const [prop, val] = sel.split(':');
-            stlCss[prop] = val;
+            stlCss[prop] = val.trim();
         }
     });
     return stlCss;
@@ -32,12 +32,12 @@ const parseStyleString = function parseStyleString(stl) {
  * @param {Object} elstl Style object
  * @return {string} CSS style string
  */
-const makeStyleString = function makeStyleString(elstl) {
-    let stl = '';
+const objectToStyle = function objectToStyle(elstl) {
+    const stl = [];
     for (const p in elstl) {
-        stl += `${p}:${elstl[p]};`;
+        stl.push(`${p}:${elstl[p]}`);
     }
-    return stl;
+    return stl.join(';');
 }
 
 /**
@@ -52,8 +52,13 @@ const makeStyleString = function makeStyleString(elstl) {
  */
 function createInfo(el, pos, str, cls, stl) {
     const info = document.createElement('span');
-    info.className = cls || '';
-    info.setAttribute('style', makeStyleString({ ...css, ...parseStyleString(stl) }));
+    if (cls.trim().length) {
+        info.className = cls;
+    }
+    const style = objectToStyle({ ...css, ...styleToObject(stl) });
+    if (style.length) {
+        info.setAttribute('style', style);
+    }
     info.textContent = str;
     if (pos === 0) {
         el.parentNode.insertBefore(info, el);
@@ -67,7 +72,6 @@ function createInfo(el, pos, str, cls, stl) {
     return info;
 }
 
-
 /**
  * Create an info label
  *
@@ -79,7 +83,21 @@ function createInfo(el, pos, str, cls, stl) {
  * @returns {HTMLSpanElement}
  */
 function createSuccess(el, pos, str, cls, stl) {
-    return createInfo(el, pos, str, cls, `${stl};background-color:lime`);
+    return createInfo(el, pos, `✔ ${str}`, cls, `${stl};background-color:lime`);
+}
+
+/**
+ * Create an error label
+ *
+ * @param {Element} el Reference element
+ * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
+ * @param {String} str Text content
+ * @param {String} cls CSS class names
+ * @param {string} stl Inline CSS styles
+ * @returns {HTMLSpanElement}
+ */
+function createError(el, pos, str, cls, stl) {
+    return createInfo(el, pos, `✖💀 ${str}`, cls, `${stl};background-color:#EB0000;color:#fff`);
 }
 
 /**
@@ -139,6 +157,7 @@ function createRegion(title, el, pos, str, cls, stl) {
 
 exports.createInfo = createInfo;
 exports.createSuccess = createSuccess;
+exports.createError = createError;
 exports.createAfterInfo = createAfterInfo;
 exports.createAfterInfoAndIds = createAfterInfoAndIds;
 exports.createRegion = createRegion;
