@@ -5,9 +5,34 @@ const css = {
     'font-family': 'sans-serif',
     'font-size': 'small',
     'background-color': 'yellow',
-    speak: 'literal-punctuation',
-    padding: '2px'
+    padding: '5px',
+    outline: '2px dotted #000',
+    'outline-offset': '-3px',
+    'border-width': 0,
+    cursor: 'default'
 };
+
+/**
+ * Return whether an HTML element is a void element
+ *
+ * @param {Element} el HTML element
+ * @param {String} add Addition HTML elements
+ * @returns {boolean} Is a void element
+ */
+const isVoidEl = function isVoidEl(el, ...add) {
+    return ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr', ...add].indexOf(el.tagName.toLowerCase()) >= 0;
+}
+
+/**
+ * Return whether an HTML element is a void element including special form elements
+ *
+ * @param {Element} el HTML element
+ * @param {String} add Addition HTML elements
+ * @returns {boolean} Is a void element
+ */
+const isVoidFormEl = function isVoidFormEl(el) {
+    return isVoidEl(el, 'select', 'textarea');
+}
 
 /**
  * Parse CSS style string
@@ -41,63 +66,115 @@ const objectToStyle = function objectToStyle(elstl) {
 }
 
 /**
- * Create an info label
- *
- * @param {Element} el Reference element
- * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
- * @param {String} str Text content
- * @param {String} cls CSS class names
- * @param {string} stl Inline CSS styles
- * @returns {HTMLSpanElement}
+ * Info label
  */
-function createInfo(el, pos, str, cls, stl) {
-    const info = document.createElement('span');
-    if (cls.trim().length) {
-        info.className = cls;
+class Info {
+    /**
+     * Create an info label
+     *
+     * @param {Element} el Reference element
+     * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
+     * @param {String} str Text content
+     * @param {String} cls CSS class names
+     * @param {String} stl Inline CSS styles
+     */
+    constructor(el, pos, str, cls, stl) {
+        this.el = el;
+        this.pos = pos;
+        this.str = str;
+        this.cls = cls;
+        this.stl = stl;
     }
-    const style = objectToStyle({ ...css, ...styleToObject(stl) });
-    if (style.length) {
-        info.setAttribute('style', style);
+
+    /**
+     * Create and return the info element
+     *
+     * @returns {HTMLSpanElement}
+     */
+    create() {
+        const info = document.createElement('button');
+        if (this.cls.trim().length) {
+            info.className = this.cls;
+        }
+        const styleObj = { ...css, ...styleToObject(this.stl) };
+        if (this.el.offsetParent) {
+            styleObj.left = `${this.el.offsetLeft}px`;
+            styleObj.top = `${this.el.offsetTop}px`;
+        }
+        const style = objectToStyle(styleObj);
+        if (style.length) {
+            info.setAttribute('style', style);
+        }
+        info.textContent = this.str;
+        if (this.pos === 0) {
+            this.el.parentNode.insertBefore(info, this.el);
+        } else if (this.pos === 1) {
+            this.el.parentNode.insertBefore(info, this.el.nextSibling);
+        } else if (this.pos === 2) {
+            this.el.insertBefore(info, this.el.firstChild);
+        } else if (this.pos === 3) {
+            this.el.appendChild(info);
+        }
+        info.onclick = e => {
+            console.log(this.el);
+            return false;
+        }
+        return info;
     }
-    info.textContent = str;
-    if (pos === 0) {
-        el.parentNode.insertBefore(info, el);
-    } else if (pos === 1) {
-        el.parentNode.insertBefore(info, el.nextSibling);
-    } else if (pos === 2) {
-        el.insertBefore(info, el.firstChild);
-    } else if (pos === 3) {
-        el.appendChild(info);
-    }
-    return info;
 }
 
 /**
- * Create an info label
- *
- * @param {Element} el Reference element
- * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
- * @param {String} str Text content
- * @param {String} cls CSS class names
- * @param {string} stl Inline CSS styles
- * @returns {HTMLSpanElement}
+ * Success info
  */
-function createSuccess(el, pos, str, cls, stl) {
-    return createInfo(el, pos, `✔ ${str}`, cls, `${stl};background-color:lime`);
+class SuccessInfo extends Info {
+    /**
+     * Create a success info
+     *
+     * @param {Element} el Reference element
+     * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
+     * @param {String} str Text content
+     * @param {String} cls CSS class names
+     * @param {String} stl Inline CSS styles
+     */
+    constructor(el, pos, str, cls, stl) {
+        super(el, pos, `✔ ${str}`, cls, `${stl};background-color:lime;outline-color:#000`);
+    }
 }
 
 /**
- * Create an error label
- *
- * @param {Element} el Reference element
- * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
- * @param {String} str Text content
- * @param {String} cls CSS class names
- * @param {string} stl Inline CSS styles
- * @returns {HTMLSpanElement}
+ * Error label
  */
-function createError(el, pos, str, cls, stl) {
-    return createInfo(el, pos, `✖💀 ${str}`, cls, `${stl};background-color:#EB0000;color:#fff`);
+class ErrorInfo extends Info {
+    /**
+     * Create an error info
+     *
+     * @param {Element} el Reference element
+     * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
+     * @param {String} str Text content
+     * @param {String} cls CSS class names
+     * @param {String} stl Inline CSS styles
+     */
+    constructor(el, pos, str, cls, stl) {
+        super(el, pos, `✖ ${str}`, cls, `${stl};background-color:#EB0000;outline-color:#fff;color:#fff`);
+    }
+}
+
+/**
+ * Warning info
+ */
+class WarningInfo extends Info {
+    /**
+     * Create a warning info
+     *
+     * @param {Element} el Reference element
+     * @param {Number} pos Insertion mode (0 / 1 = before / after node, 2 / 3 = before first / after last child)
+     * @param {String} str Text content
+     * @param {String} cls CSS class names
+     * @param {String} stl Inline CSS styles
+     */
+    constructor(el, pos, str, cls, stl) {
+        super(el, pos, `💀 ${str}`, cls, stl);
+    }
 }
 
 /**
@@ -155,9 +232,12 @@ function createRegion(title, el, pos, str, cls, stl) {
     return region;
 }
 
-exports.createInfo = createInfo;
-exports.createSuccess = createSuccess;
-exports.createError = createError;
-exports.createAfterInfo = createAfterInfo;
-exports.createAfterInfoAndIds = createAfterInfoAndIds;
-exports.createRegion = createRegion;
+// exports.createAfterInfo = createAfterInfo;
+// exports.createAfterInfoAndIds = createAfterInfoAndIds;
+// exports.createRegion = createRegion;
+exports.isVoidEl = isVoidEl;
+exports.isVoidFormEl = isVoidFormEl;
+exports.Info = Info;
+exports.SuccessInfo = SuccessInfo;
+exports.ErrorInfo = ErrorInfo;
+exports.WarningInfo = WarningInfo;
