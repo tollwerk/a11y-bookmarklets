@@ -35,6 +35,29 @@ const isVoidFormEl = function isVoidFormEl(el) {
 }
 
 /**
+ * Recursively reset all info bubbles
+ */
+const reset = function reset() {
+    recurse(e => e.remove(), '.twa11y');
+}
+
+/**
+ * Apply a query selector callback and recurse into shadow DOMs
+ *
+ * @param {Function} func Callback
+ * @param {String} sel Selector
+ * @param {Element} root Root element (defaults to the document)
+ */
+const recurse = function recurse(func, sel, root = null) {
+    Array.from((root || document).querySelectorAll(sel)).forEach(func);
+    Array.from((root || document).querySelectorAll('*')).forEach(el => {
+        if (el.shadowRoot) {
+            recurse(func, sel, el.shadowRoot);
+        }
+    });
+}
+
+/**
  * Parse CSS style string
  *
  * @param {String} stl CSS style string
@@ -82,7 +105,7 @@ class Info {
         this.el = el;
         this.pos = pos;
         this.str = str;
-        this.cls = cls;
+        this.cls = `twa11y ${cls}`.trim();
         this.stl = stl;
     }
 
@@ -237,6 +260,8 @@ function createRegion(title, el, pos, str, cls, stl) {
 // exports.createRegion = createRegion;
 exports.isVoidEl = isVoidEl;
 exports.isVoidFormEl = isVoidFormEl;
+exports.reset = reset;
+exports.recurse = recurse;
 exports.Info = Info;
 exports.SuccessInfo = SuccessInfo;
 exports.ErrorInfo = ErrorInfo;

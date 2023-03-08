@@ -1,7 +1,8 @@
 // https://act-rules.github.io/rules/e086e5
-import { ErrorInfo, SuccessInfo, WarningInfo } from "../lib/info";
+import { ErrorInfo, recurse, reset, SuccessInfo, WarningInfo } from "../lib/info";
 
 (function iefe(d, s) {
+    reset();
     const sel = ['input:not([type="hidden"]):not([type="submit"]):not([type="reset"])', 'select', 'textarea'];
     const stl = 'position:absolute;line-height:100%;z-index:2147483647';
     for (const role of ['checkbox', 'combobox', 'listbox', 'menuitemcheckbox', 'menuitemradio', 'radio', 'searchbox', 'slider', 'spinbutton', 'switch', 'textbox']) {
@@ -91,13 +92,5 @@ import { ErrorInfo, SuccessInfo, WarningInfo } from "../lib/info";
             info.create();
         }
     }
-    const labelInfoRecursive = function labelInfoRecursive(r) {
-        Array.from(r.querySelectorAll(sel.join(','))).forEach(labelInfo);
-        Array.from(r.querySelectorAll('*')).forEach(el => {
-            if (el.shadowRoot) {
-                labelInfoRecursive(el.shadowRoot);
-            }
-        });
-    }
-    labelInfoRecursive(d);
+    recurse(labelInfo, sel.join(','));
 }(document, 'setAttribute'));
