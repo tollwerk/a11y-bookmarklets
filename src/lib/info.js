@@ -133,7 +133,7 @@ class Info {
         if (style.length) {
             info.setAttribute('style', style);
         }
-        info.textContent = this.str;
+        info.innerHTML = this.str;
         if (this.pos === 0) {
             this.el.parentNode.insertBefore(info, this.el);
         } else if (this.pos === 1) {
@@ -165,7 +165,7 @@ class SuccessInfo extends Info {
      * @param {String} stl Inline CSS styles
      */
     constructor(el, pos, str, cls, stl) {
-        super(el, pos, `✔ ${str}`, cls, `${stl};background-color:lime;outline-color:#000`);
+        super(el, pos, `✔ ${str}`, cls, `${stl || ''};background-color:lime;outline-color:#000`);
     }
 }
 
@@ -183,7 +183,7 @@ class ErrorInfo extends Info {
      * @param {String} stl Inline CSS styles
      */
     constructor(el, pos, str, cls, stl) {
-        super(el, pos, `✖ ${str}`, cls, `${stl};background-color:#EB0000;outline-color:#fff;color:#fff`);
+        super(el, pos, `✖ ${str}`, cls, `${stl || ''};background-color:#EB0000;outline-color:#fff;color:#fff`);
     }
 }
 
@@ -201,7 +201,7 @@ class WarningInfo extends Info {
      * @param {String} stl Inline CSS styles
      */
     constructor(el, pos, str, cls, stl) {
-        super(el, pos, `💀 ${str}`, cls, stl);
+        super(el, pos, `💀 ${str}`, cls, stl );
     }
 }
 

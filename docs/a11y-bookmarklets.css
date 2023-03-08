@@ -24,3 +24,9 @@ a.doc, a.doc:visited {
 .hint {
     font-style: italic;
 }
+
+blockquote {
+    font-family: "Times New Roman", serif;
+    font-size: 1.2em;
+    font-style: italic;
+}
