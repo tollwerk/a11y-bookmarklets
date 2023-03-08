@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Form Field Accessible Names · tollwerk</title>
+        <link rel="stylesheet" href="a11y-bookmarklets.css"/>
+    </head>
+    <body>
+        <main>
+            <h1>Form Field Accessible Names</h1>
+            <h2>Bookmarklet</h2>
+            <p>
+                <!-- inject:bookmarklet -->
+                <!-- endinject -->
+            </p>
+            <p class="hint">A bookmarklet is a small piece of (JavaScript) code that is run in the context of the
+                currently visible
+                web page.
+                It comes as a bookmark that you typically add to your browser bookmarks for being able to run it
+                repeatedly.
+                In
+                order to install this bookmarklet,
+                please drag the link above to your browser bookmarks and call it from there. You can also click on the
+                link to run the bookmarklet on this very page.</p>
+            <h2>Purpose &amp; Notes</h2>
+            <p>The purpose of this bookmarklet is to identify form fields on the page (native elements and elements
+                with corresponding ARIA roles) and see whether they have a non-empty accessible name that can
+                be passed to assistive technology. The bookmarklet loosely aligns with the <a
+                    href="https://act-rules.github.io/rules/e086e5">ACT Rule
+                    e086e5</a> and its test cases. </p>
+            <p>The results are displayed visually on the page:</p>
+            <ul>
+                <li>A green bubble (✔) indicates a PASS (non-empty accessible name)</li>
+                <li>A red bubble (✖) indicates a FAIL (empty accessible name)</li>
+                <li>A yellow bubble (💀) indicates a PASS (non-empty accessible name), although your policy might
+                    consider these suboptimal
+                </li>
+            </ul>
+            <p>Click on any of the info
+                bubbles to log the associated form field to the DevTools console.</p>
+            <h2>Test bed</h2>
+            <form>
+                <div>
+                    <label for="input-1">Input 1</label>
+                    <input type="text" id="input-1">
+                </div>
+                <div>
+                    <label for="input-2">Input 2.1</label>
+                    <input type="text" id="input-2">
+                    <label for="input-2">Input 2.2</label>
+                </div>
+                <div>
+                    <label>
+                        Input 3
+                        <input type="text" id="input-3">
+                    </label>
+                </div>
+                <div>
+                    Input 4
+                    <input type="text" id="input-4">
+                </div>
+                <div>
+                    <input type="text" aria-label="Input 5">
+                </div>
+                <div>
+                    <span id="input-6">Input 6</span>
+                    <input type="text" aria-labelledby="input-6">
+                </div>
+                <div>
+                    <input type="text" title="Input 7">
+                </div>
+                <div>
+                    <input type="text" placeholder="Input 8">
+                </div>
+                <div>
+                    <div aria-label="Input 9" role="combobox" aria-disabled="true">Combobox</div>
+                </div>
+                <div>
+                    <div role="checkbox">ARIA-Checkbox with text content</div>
+                </div>
+            </form>
+        </main>
+        <footer>
+            <a href="index.html">Back to list</a>
+        </footer>
+    </body>
+</html>

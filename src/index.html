@@ -3,60 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>Accessibility Testing Bookmarklets · tollwerk</title>
+        <link rel="stylesheet" href="a11y-bookmarklets.css"/>
     </head>
     <body>
         <h1>Accessibility Testing Bookmarklets</h1>
         <p>The bookmarklets in this repository can help with auditing and testing a web application for accessibility
             issues. Some of them were heavily inspired by the <a href="https://github.com/pauljadam/bookmarklets">bookmarklets
-                by Paul J. Adam</a> but don't use externals scripts and / or jQuery so they also work under rather
+                by Paul J. Adam</a> but don't use external scripts and / or jQuery so they also do their job under
             restrictive <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" rel="nofollow">CSP headers /
-                meta tags</a>.</p>
-        <h2>Installation</h2>
-        <p>To install a bookmarklet, drag the link to your browser bookmarks:</p>
+                meta tags</a>. The bookmarklets marked with Ⓣ have been (re)written from scratch, the others
+            were collected elsewhere (e.g. from the <a href="https://www.bitvtest.de/bitv_test/das_testverfahren_im_detail/werkzeugliste.html#c1356">BIK BITV test toolbox</a>, hence sometimes the German names) and slightly adapted. Where missing, documentation will be added over time.</p>
+        <h2>Bookmarklets</h2>
         <ul>
             <!-- inject:bookmarklet -->
             <!-- endinject -->
         </ul>
-        <h2>Form fields</h2>
-        <form>
-            <div>
-                <label for="input-1">Input 1</label>
-                <input type="text" id="input-1">
-            </div>
-            <div>
-                <label for="input-2">Input 2.1</label>
-                <input type="text" id="input-2">
-                <label for="input-2">Input 2.2</label>
-            </div>
-            <div>
-                <label>
-                    Input 3
-                    <input type="text" id="input-3">
-                </label>
-            </div>
-            <div>
-                Input 4
-                <input type="text" id="input-4">
-            </div>
-            <div>
-                <input type="text" aria-label="Input 5">
-            </div>
-            <div>
-                <span id="input-6">Input 6</span>
-                <input type="text" aria-labelledby="input-6">
-            </div>
-            <div>
-                <input type="text" title="Input 7">
-            </div>
-            <div>
-                <input type="text" placeholder="Input 8">
-            </div>
-            <div>
-                <div aria-label="Input 9" role="combobox" aria-disabled="true">Combobox</div>
-            </div>
-            <div>
-                <div role="checkbox">ARIA-Checkbox with text content</div>
-            </div>
-        </form>
+        <h2>Installation</h2>
+        <p>A bookmarklet is a small piece of (JavaScript) code that is run in the context of the currently visible
+            web page.
+            It comes as a bookmark that you typically add to your browser bookmarks for being able to run it repeatedly.
+            In
+            order to install one of the bookmarklets above,
+            please drag its link to your browser bookmarks and call it from there.</p>
     </body>
 </html>

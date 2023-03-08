@@ -1,4 +1,4 @@
-// https://act-rules.github.io/rules/e086e5#accessibility-support
+// https://act-rules.github.io/rules/e086e5
 import { ErrorInfo, SuccessInfo, WarningInfo } from "../lib/info";
 
 (function iefe(d, s) {

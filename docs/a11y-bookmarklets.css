@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 2em;
+    max-width: 48em;
+}
+
+footer {
+    border-top: 1px solid #757575;
+    margin-top: 2em;
+    padding-top: 2em;
+}
+
+a, a:visited {
+    color: blue;
+}
+
+a.doc, a.doc:visited {
+    color: #000;
+    font-style: italic;
+}
+
+.hint {
+    font-style: italic;
+}
