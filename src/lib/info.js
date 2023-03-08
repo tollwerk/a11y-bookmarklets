@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const css = {
     color: 'black',
@@ -21,7 +21,7 @@ const css = {
  */
 const isVoidEl = function isVoidEl(el, ...add) {
     return ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr', ...add].indexOf(el.tagName.toLowerCase()) >= 0;
-}
+};
 
 /**
  * Return whether an HTML element is a void element including special form elements
@@ -32,14 +32,14 @@ const isVoidEl = function isVoidEl(el, ...add) {
  */
 const isVoidFormEl = function isVoidFormEl(el) {
     return isVoidEl(el, 'select', 'textarea');
-}
+};
 
 /**
  * Recursively reset all info bubbles
  */
 const reset = function reset() {
-    recurse(e => e.remove(), '.twa11y');
-}
+    recurse((e) => e.remove(), '.twa11y');
+};
 
 /**
  * Apply a query selector callback and recurse into shadow DOMs
@@ -47,15 +47,20 @@ const reset = function reset() {
  * @param {Function} func Callback
  * @param {String} sel Selector
  * @param {Element} root Root element (defaults to the document)
+ * @return {Number} Number of occurrences
  */
 const recurse = function recurse(func, sel, root = null) {
-    Array.from((root || document).querySelectorAll(sel)).forEach(func);
-    Array.from((root || document).querySelectorAll('*')).forEach(el => {
+    let count = Array.from((root || document).querySelectorAll(sel)).reduce((acc, el) => {
+        func(el);
+        return acc + 1;
+    }, 0);
+    Array.from((root || document).querySelectorAll('*')).forEach((el) => {
         if (el.shadowRoot) {
-            recurse(func, sel, el.shadowRoot);
+            count += recurse(func, sel, el.shadowRoot);
         }
     });
-}
+    return count;
+};
 
 /**
  * Parse CSS style string
@@ -65,14 +70,14 @@ const recurse = function recurse(func, sel, root = null) {
  */
 const styleToObject = function styleToObject(stl) {
     const stlCss = {};
-    stl.split(';').forEach(sel => {
+    stl.split(';').forEach((sel) => {
         if (sel.trim().length) {
             const [prop, val] = sel.split(':');
             stlCss[prop] = val.trim();
         }
     });
     return stlCss;
-}
+};
 
 /**
  * Format a CSS style string from an object
@@ -86,7 +91,7 @@ const objectToStyle = function objectToStyle(elstl) {
         stl.push(`${p}:${elstl[p]}`);
     }
     return stl.join(';');
-}
+};
 
 /**
  * Info label
@@ -104,9 +109,9 @@ class Info {
     constructor(el, pos, str, cls, stl) {
         this.el = el;
         this.pos = pos;
-        this.str = str;
+        this.str = (str || '').trim();
         this.cls = `twa11y ${cls}`.trim();
-        this.stl = stl;
+        this.stl = (stl || '').trim();
     }
 
     /**
@@ -138,10 +143,10 @@ class Info {
         } else if (this.pos === 3) {
             this.el.appendChild(info);
         }
-        info.onclick = e => {
+        info.onclick = (e) => {
             console.log(this.el);
             return false;
-        }
+        };
         return info;
     }
 }
@@ -225,13 +230,7 @@ function createAfterInfoAndIds(el, str, val) {
         const idEl = document.getElementById(valByArray[i]);
         if (idEl) {
             idEl.setAttribute('style', 'outline:orange 2px dashed;');
-            createInfo(
-                el,
-                2,
-                `❓id="${valByArray[i]}"`,
-                'inputSpan',
-                'outline:orange 2px dashed;padding:1px;z-index:2147483647;'
-            );
+            createInfo(el, 2, `❓id="${valByArray[i]}"`, 'inputSpan', 'outline:orange 2px dashed;padding:1px;z-index:2147483647;');
         }
     }
     return createAfterInfo(el, str);

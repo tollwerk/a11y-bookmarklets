@@ -1,5 +1,5 @@
 // https://act-rules.github.io/rules/e086e5
-import { ErrorInfo, recurse, reset, SuccessInfo, WarningInfo } from "../lib/info";
+import { ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } from "../lib/info";
 
 (function iefe(d, s) {
     reset();
@@ -92,5 +92,6 @@ import { ErrorInfo, recurse, reset, SuccessInfo, WarningInfo } from "../lib/info
             info.create();
         }
     }
-    recurse(labelInfo, sel.join(','));
+    const count = recurse(labelInfo, sel.join(','));
+    (new Info(d.body, 2, `Form fields found: ${count}`, null, 'font-weight:bold;position:absolute')).create();
 }(document, 'setAttribute'));
