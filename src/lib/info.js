@@ -11,6 +11,7 @@ const css = {
     'border-width': 0,
     cursor: 'default'
 };
+const colors = { error: '#EB0000', success: 'lime' };
 
 /**
  * Return whether an HTML element is a void element
@@ -35,13 +36,6 @@ const isVoidFormEl = function isVoidFormEl(el) {
 };
 
 /**
- * Recursively reset all info bubbles
- */
-const reset = function reset() {
-    recurse((e) => e.remove(), '.twa11y');
-};
-
-/**
  * Apply a query selector callback and recurse into shadow DOMs
  *
  * @param {Function} func Callback
@@ -60,6 +54,13 @@ const recurse = function recurse(func, sel, root = null) {
         }
     });
     return count;
+};
+
+/**
+ * Recursively reset all info bubbles
+ */
+const reset = function reset() {
+    recurse((e) => e.remove(), '.twa11y');
 };
 
 /**
@@ -105,13 +106,17 @@ class Info {
      * @param {String} str Text content
      * @param {String} cls CSS class names
      * @param {String} stl Inline CSS styles
+     * @param {String} icn Icon (Unicode)
+     * @param {Boolean} opn Always opened
      */
-    constructor(el, pos, str, cls, stl) {
+    constructor(el, pos, str, cls, stl, icn, opn) {
         this.el = el;
         this.pos = pos;
         this.str = (str || '').trim();
         this.cls = `twa11y ${cls}`.trim();
         this.stl = (stl || '').trim();
+        this.icn = icn || '🔍';
+        this.opn = !!opn;
     }
 
     /**
@@ -125,7 +130,7 @@ class Info {
             info.className = this.cls;
         }
         const styleObj = { ...css, ...styleToObject(this.stl) };
-        if (this.el.offsetParent) {
+        if (this.el.offsetParent && (this.el.offsetParent !== document.body)) {
             styleObj.left = `${this.el.offsetLeft}px`;
             styleObj.top = `${this.el.offsetTop}px`;
         }
@@ -133,7 +138,22 @@ class Info {
         if (style.length) {
             info.setAttribute('style', style);
         }
-        info.innerHTML = this.str;
+        if (this.icn) {
+            info.innerHTML = this.icn;
+            const inner = document.createElement('span');
+            inner.innerHTML = this.str;
+            inner.style.marginLeft = '4px';
+            info.appendChild(inner);
+            if (!this.opn) {
+                inner.style.display = 'none';
+                info.addEventListener('focus', () => inner.style.display = 'inline');
+                info.addEventListener('mouseover', () => inner.style.display = 'inline');
+                info.addEventListener('blur', () => inner.style.display = 'none');
+                info.addEventListener('mouseout', () => inner.style.display = 'none');
+            }
+        } else {
+            info.innerHTML = this.str;
+        }
         if (this.pos === 0) {
             this.el.parentNode.insertBefore(info, this.el);
         } else if (this.pos === 1) {
@@ -163,9 +183,11 @@ class SuccessInfo extends Info {
      * @param {String} str Text content
      * @param {String} cls CSS class names
      * @param {String} stl Inline CSS styles
+     * @param {String} icn Icon (Unicode)
+     * @param {Boolean} opn Always opened
      */
-    constructor(el, pos, str, cls, stl) {
-        super(el, pos, `✔ ${str}`, cls, `${stl || ''};background-color:lime;outline-color:#000`);
+    constructor(el, pos, str, cls, stl, icn, opn) {
+        super(el, pos, str, cls, `${stl || ''};background-color:lime;outline-color:#000`, icn || '✔', !!opn);
     }
 }
 
@@ -181,9 +203,11 @@ class ErrorInfo extends Info {
      * @param {String} str Text content
      * @param {String} cls CSS class names
      * @param {String} stl Inline CSS styles
+     * @param {String} icn Icon (Unicode)
+     * @param {Boolean} opn Always opened
      */
-    constructor(el, pos, str, cls, stl) {
-        super(el, pos, `✖ ${str}`, cls, `${stl || ''};background-color:#EB0000;outline-color:#fff;color:#fff`);
+    constructor(el, pos, str, cls, stl, icn, opn) {
+        super(el, pos, str, cls, `${stl || ''};background-color:#EB0000;outline-color:#fff;color:#fff`, icn || '✖', !!opn);
     }
 }
 
@@ -199,69 +223,21 @@ class WarningInfo extends Info {
      * @param {String} str Text content
      * @param {String} cls CSS class names
      * @param {String} stl Inline CSS styles
+     * @param {String} icn Icon (Unicode)
+     * @param {Boolean} opn Always opened
      */
-    constructor(el, pos, str, cls, stl) {
-        super(el, pos, `💀 ${str}`, cls, stl );
+    constructor(el, pos, str, cls, stl, icn, opn) {
+        super(el, pos, str, cls, `${stl || ''};background-color:orange;outline-color:#000`, icn || '💀', !!opn);
     }
 }
 
-/**
- * Create a closing info label
- *
- * @param {Element} el Reference element
- * @param {String} str Text content
- * @returns {HTMLSpanElement}
- */
-function createAfterInfo(el, str) {
-    return createInfo(el, 1, str, 'closeSpan', 'outline:orange 2px dashed;margin:0 2px;padding:2px;');
-}
-
-/**
- * Create a closing info label and highlight elements referenced by ID
- *
- * @param {Element} el Reference element
- * @param {String} str Text content
- * @param {String} val IDREFs
- * @returns {HTMLSpanElement}
- */
-function createAfterInfoAndIds(el, str, val) {
-    const valByArray = val.split(' ');
-    for (let i = 0; i < valByArray.length; i += 1) {
-        const idEl = document.getElementById(valByArray[i]);
-        if (idEl) {
-            idEl.setAttribute('style', 'outline:orange 2px dashed;');
-            createInfo(el, 2, `❓id="${valByArray[i]}"`, 'inputSpan', 'outline:orange 2px dashed;padding:1px;z-index:2147483647;');
-        }
-    }
-    return createAfterInfo(el, str);
-}
-
-/**
- * Create an info label and make it a named region
- *
- * @param {String} title Region title
- * @param {Element} el Reference element
- * @param {Number} pos Insertion mode (0 / 1 = before / after parent node, 2 / 3 = before first / after last child)
- * @param {String} str Text content
- * @param {String} cls CSS class names
- * @param {string} stl Inline CSS styles
- * @returns {HTMLSpanElement}
- */
-function createRegion(title, el, pos, str, cls, stl) {
-    const region = createInfo(el, pos, str, cls, stl);
-    region.setAttribute('role', 'region');
-    region.setAttribute('aria-label', title);
-    return region;
-}
-
-// exports.createAfterInfo = createAfterInfo;
-// exports.createAfterInfoAndIds = createAfterInfoAndIds;
-// exports.createRegion = createRegion;
 exports.isVoidEl = isVoidEl;
 exports.isVoidFormEl = isVoidFormEl;
 exports.reset = reset;
 exports.recurse = recurse;
+exports.colors = colors;
 exports.Info = Info;
 exports.SuccessInfo = SuccessInfo;
 exports.ErrorInfo = ErrorInfo;
 exports.WarningInfo = WarningInfo;
+

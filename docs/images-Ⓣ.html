@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Images · tollwerk</title>
+        <link rel="stylesheet" href="a11y-bookmarklets.css"/>
+    </head>
+    <body>
+        <main>
+            <h1>Language</h1>
+            <h2>Bookmarklet</h2>
+            <p>
+                <!-- inject:bookmarklet -->
+                <a href="javascript:(()=%3E%7B%22use%20strict%22;var%20t,e=%7B585:(t,e)=%3E%7Bconst%20n=%7Bcolor:%22black%22,%22font-family%22:%22sans-serif%22,%22font-size%22:%22small%22,%22background-color%22:%22yellow%22,padding:%225px%22,outline:%222px%20dotted%20#000%22,%22outline-offset%22:%22-3px%22,%22border-width%22:0,cursor:%22default%22%7D,l=function%20t(e,n,l=null)%7Blet%20o=Array.from((l%7C%7Cdocument).querySelectorAll(n)).reduce(((t,n)=%3E(e(n),t+1)),0);return%20Array.from((l%7C%7Cdocument).querySelectorAll(%22*%22)).forEach((l=%3E%7Bl.shadowRoot&&(o+=t(e,n,l.shadowRoot))%7D)),o%7D,o=function(t)%7Bconst%20e=%7B%7D;return%20t.split(%22;%22).forEach((t=%3E%7Bif(t.trim().length)%7Bconst%5Bn,l%5D=t.split(%22:%22);e%5Bn%5D=l.trim()%7D%7D)),e%7D;class%20s%7Bconstructor(t,e,n,l,o,s,i)%7Bthis.el=t,this.pos=e,this.str=(n%7C%7C%22%22).trim(),this.cls=%60twa11y%20$%7Bl%7D%60.trim(),this.stl=(o%7C%7C%22%22).trim(),this.icn=s%7C%7C%22%F0%9F%94%8D%22,this.opn=!!i%7Dcreate()%7Bconst%20t=document.createElement(%22button%22);this.cls.trim().length&&(t.className=this.cls);const%20e=%7B...n,...o(this.stl)%7D;this.el.offsetParent&&this.el.offsetParent!==document.body&&(e.left=%60$%7Bthis.el.offsetLeft%7Dpx%60,e.top=%60$%7Bthis.el.offsetTop%7Dpx%60);const%20l=function(t)%7Bconst%20e=%5B%5D;for(const%20n%20in%20t)e.push(%60$%7Bn%7D:$%7Bt%5Bn%5D%7D%60);return%20e.join(%22;%22)%7D(e);if(l.length&&t.setAttribute(%22style%22,l),this.icn)%7Bt.innerHTML=this.icn;const%20e=document.createElement(%22span%22);e.innerHTML=this.str,e.style.marginLeft=%224px%22,t.appendChild(e),this.opn%7C%7C(e.style.display=%22none%22,t.addEventListener(%22focus%22,(()=%3Ee.style.display=%22inline%22)),t.addEventListener(%22mouseover%22,(()=%3Ee.style.display=%22inline%22)),t.addEventListener(%22blur%22,(()=%3Ee.style.display=%22none%22)),t.addEventListener(%22mouseout%22,(()=%3Ee.style.display=%22none%22)))%7Delse%20t.innerHTML=this.str;return%200===this.pos?this.el.parentNode.insertBefore(t,this.el):1===this.pos?this.el.parentNode.insertBefore(t,this.el.nextSibling):2===this.pos?this.el.insertBefore(t,this.el.firstChild):3===this.pos&&this.el.appendChild(t),t.onclick=t=%3E(console.log(this.el),!1),t%7D%7De.mc=function()%7Bl((t=%3Et.remove()),%22.twa11y%22)%7D,e.NR=l,e.O9=%7Berror:%22#EB0000%22,success:%22lime%22%7D,e.kI=s,e.Qz=class%20extends%20s%7Bconstructor(t,e,n,l,o,s,i)%7Bsuper(t,e,n,l,%60$%7Bo%7C%7C%22%22%7D;background-color:lime;outline-color:#000%60,s%7C%7C%22%E2%9C%94%22,!!i)%7D%7D,e.Qf=class%20extends%20s%7Bconstructor(t,e,n,l,o,s,i)%7Bsuper(t,e,n,l,%60$%7Bo%7C%7C%22%22%7D;background-color:#EB0000;outline-color:#fff;color:#fff%60,s%7C%7C%22%E2%9C%96%22,!!i)%7D%7D,e.bI=class%20extends%20s%7Bconstructor(t,e,n,l,o,s,i)%7Bsuper(t,e,n,l,%60$%7Bo%7C%7C%22%22%7D;background-color:orange;outline-color:#000%60,s%7C%7C%22%F0%9F%92%80%22,!!i)%7D%7D%7D%7D,n=%7B%7D;t=function%20t(l)%7Bvar%20o=n%5Bl%5D;if(void%200!==o)return%20o.exports;var%20s=n%5Bl%5D=%7Bexports:%7B%7D%7D;return%20e%5Bl%5D(s,s.exports,t),s.exports%7D(585),function(e,n,l,o)%7Bfunction%20s(t,e)%7Bif(t%5Bn%5D(e))%7Bconst%20n=t%5Bl%5D(e);return%20this.push(%60%5B$%7Be%7D=%22$%7Bn%7D%22%5D%60),n%7Dreturn%20null%7Dfunction%20i(e,n)%7Bconst%20l=s.call(this,e,n),o=%5B%5D;if(null!==l)%7Bconst%20e=l.split(%22%20%22);for(let%20n=0;n%3Ce.length;n+=1)%7Bconst%20l=e%5Bn%5D.trim();if(l.length)%7Bconst%20e=document.getElementById(l);if(e)%7Be.setAttribute(%22style%22,%22outline:orange%202px%20dotted;%22),new%20t.kI(e,2,%60%5Bid=$%7Bl%7D%5D%60,null,%22position:absolute%22).create();const%20n=e.textContent;n.trim().length&&o.unshift(n)%7D%7D%7D%7Dreturn%20o.length?o.join(%22%22):null%7Dfunction%20r(t)%7Breturn%20t.parentNode&&(%22A%22===t.parentNode.tagName%7C%7Cr(t.parentNode))%7D(0,t.mc)(),(0,t.NR)((e=%3E%7Bnew%20t.Qf(e,2,%60&amp;lt;$%7Be.tagName.toLowerCase()%7D&amp;gt;%20with%20invalid%20%3Ccode%3Ealt=%22$%7Be.getAttribute(%22alt%22)%7D%22%3C/code%3E%60,null,%22position:absolute%22).create()%7D),%22a%5Balt%5D,button%5Balt%5D,label%5Balt%5D%22);const%20c=%22position:absolute%22,a=(0,t.NR)((function(e)%7Bconst%20o=%5B%5D;s.call(o,e,%22role%22);let%20a=null===s.call(o,e,%22aria-label%22);a=null===i.call(o,e,%22aria-describedby%22)&&a,a=null===i.call(o,e,%22aria-labelledby%22)&&a;let%20u=null,d=!1;if(e.style.outline=%22#080%202px%20dotted%22,e.style.padding=%222px%22,e%5Bn%5D(%22title%22)&&(u=%22Title%22,o.push(%60%5Btitle=%22$%7Be%5Bl%5D(%22title%22)%7D%22%5D%60)),e%5Bn%5D(%22longdesc%22)&&(u=%22Long%20description%22,o.push(%60%5Blongdesc=%22$%7Be%5Bl%5D(%22longdesc%22)%7D%22%5D%60)),e%5Bn%5D(%22alt%22))a=!1,d=!e%5Bl%5D(%22alt%22).trim().length,o.unshift((r(e)?%22a%20%22:%22%22)+%60%5Balt=%22$%7Be%5Bl%5D(%22alt%22)%7D%22%5D%60);else%7Bconst%20l=a&&!e%5Bn%5D(%22title%22);a=l,r(e)?l&&o.unshift(%22a%20%5B!alt%5D%22):o.unshift(%22%5B!alt%5D%22),a&&(e.style%5B%22outline-color%22%5D=t.O9.error)%7Dconst%20f=new(a?t.Qf:d?t.bI:t.Qz)(e,0,o.join(%22%22),null,c).create();u&&(f.setAttribute(%22role%22,%22region%22),f.setAttribute(%22aria-label%22,u))%7D),%22img,%20%5Brole=img%5D%22);new%20t.kI(e.documentElement,2,%60Images%20found%20on%20page:%20$%7Ba%7D%60,null,c,null,!0).create()%7D(document,%22hasAttribute%22,%22getAttribute%22)%7D)();">Images Ⓣ</a>
+                <!-- endinject -->
+            </p>
+            <p class="hint">A bookmarklet is a small piece of (JavaScript) code that is run in the context of the
+                currently visible
+                web page.
+                It comes as a bookmark that you typically add to your browser bookmarks for being able to run it
+                repeatedly.
+                In
+                order to install this bookmarklet,
+                please drag the link above to your browser bookmarks and call it from there. You can also click on the
+                link to run the bookmarklet on this very page.</p>
+            <h2>Purpose &amp; Notes</h2>
+            <p>The purpose of this bookmarklet is to display the alternative text of images and graphics so that one can
+                examine its sense. Decorative images are highlighted so that one can check their state. Images without
+                any treatment are marked as erroneous.</p>
+            <p>The results are displayed visually on the page:</p>
+            <ul>
+                <li>A green bubble (✔) indicates a specified and non-empty alternative text.</li>
+                <li>A red bubble (✖) indicates a missing alternative text.</li>
+                <li>An orange bubble (💀) indicates a specified but empty alternative text (decorative image). This is not a definite error but you should check whether it's appropriate.
+                </li>
+            </ul>
+            <p>Click on any of the info
+                bubbles to log the associated element to the DevTools console.</p>
+            <h2>Test bed</h2>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt=""></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt="" role="presentation"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" title="why do I have a title attribute 3rd image?" alt=" ">
+            </p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" title="why do I have a title attribute 4th image?"
+                    role="presentation"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" title="why do I have a title attribute 5th image?"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt="" title="why do I have a title attribute 6th image?">
+            </p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt="" role="presentation"
+                    title="why do I have a title attribute 7th image?"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main"></p>
+            <p><a href="http://www.dequeuniversity.com"><img src="https://www.w3.org/Icons/w3c_main"></a></p>
+            <p><a href="http://www.dequeuniversity.com"><img src="https://www.w3.org/Icons/w3c_main"
+                                                             alt="W3C® Worldwide Web Consortium"></a></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt="W3C® Worldwide Web Consortium"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" alt="W3C® Worldwide Web Consortium" aria-hidden="true"></p>
+            <p><img src="https://www.w3.org/Icons/w3c_main" role="img"></p>
+            <div role="img">div role equals image</div>
+            <div role="img" aria-label="text aria label value">div role equals image with aria-label</div>
+            <div role="img" aria-labelledby="fakeId1">div role equals image with aria-labelledby</div>
+            <div role="img" aria-describedby="fakeId2">div role equals image with aria-describedby</div>
+            <p id="fakeId1">Fake ID 1</p>
+            <p id="fakeId2">Fake ID 2</p>
+            <p><button alt="Invalid alt attrbute">Button with alt attribute</button></p>
+            <p><a href="#" alt="Invalid alt attrbute">Link with alt attribute</a></p>
+            <p><label alt="Invalid alt attrbute">Label with alt attribute</label></p>
+        </main>
+        <footer>
+            <a href="index.html">Back to list</a>
+        </footer>
+    </body>
+</html>
