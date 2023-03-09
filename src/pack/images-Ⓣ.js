@@ -89,10 +89,10 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
             empty = relevant;
             if (isLinked(el)) {
                 if (relevant) {
-                    label.unshift('a [!alt]');
+                    label.unshift('a [<s>alt</s>]');
                 }
             } else {
-                label.unshift('[!alt]');
+                label.unshift('[<s>alt</s>]');
             }
             if (empty) {
                 el.style['outline-color'] = colors.error;
