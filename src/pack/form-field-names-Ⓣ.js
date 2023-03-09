@@ -92,5 +92,11 @@ import { ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } from "../li
         }
     }
     const count = recurse(labelInfo, sel.join(','));
-    (new Info(d.documentElement, 2, `Form fields found: ${count}`, null, 'font-weight:bold;position:absolute', null, true)).create();
+    (new Info(
+        d.documentElement,
+        2,
+        `Form fields found: ${count}`,
+        null,
+        'position:absolute',
+    )).create(true);
 }(document, 'setAttribute'));

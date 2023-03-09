@@ -64,6 +64,8 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
     }, 'a[alt],button[alt],label[alt]');
     const stl = 'position:absolute';
     const labelImages = function labelImages(el) {
+        const hasAlt = el[h]('alt');
+        const hasTitle = el[h]('title');
         const label = [];
         regjsterAttributeLabel.call(label, el, 'role');
         let empty = regjsterAttributeLabel.call(label, el, 'aria-label') === null;
@@ -73,7 +75,7 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
         let warn = false;
         el.style.outline = `#080 2px dotted`;
         el.style.padding = '2px';
-        if (el[h]('title')) {
+        if (hasTitle) {
             region = 'Title';
             label.push(`[title="${el[g]('title')}"]`);
         }
@@ -81,8 +83,9 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
             region = 'Long description';
             label.push(`[longdesc="${el[g]('longdesc')}"]`);
         }
-        if (!el[h]('alt')) {
-            const relevant = empty && !el[h]('title');
+        if (!hasAlt) {
+            const relevant = empty && !hasTitle;
+            warn = empty && hasTitle && el[g]('title').trim().length;
             empty = relevant;
             if (isLinked(el)) {
                 if (relevant) {
@@ -108,5 +111,5 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
         }
     }
     const images = recurse(labelImages, 'img, [role=img]');
-    (new Info(d.documentElement, 2, `Images found on page: ${images}`, null, stl, null, true)).create();
+    (new Info(d.documentElement, 2, `Images found on page: ${images}`, null, stl)).create(true);
 }(document, 'hasAttribute', 'getAttribute', 'setAttribute'));

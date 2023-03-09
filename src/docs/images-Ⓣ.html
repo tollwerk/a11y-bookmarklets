@@ -30,7 +30,9 @@
             <ul>
                 <li>A green bubble (✔) indicates a specified and non-empty alternative text.</li>
                 <li>A red bubble (✖) indicates a missing alternative text.</li>
-                <li>An orange bubble (💀) indicates a specified but empty alternative text (decorative image). This is not a definite error but you should check whether it's appropriate.
+                <li>An orange bubble (💀) indicates either an empty alternative text (decorative image) or the
+                    dependence on the title attribute. Both case aren't necessarily an error but you should check
+                    whether you really want this.
                 </li>
             </ul>
             <p>Click on any of the info
@@ -60,7 +62,9 @@
             <div role="img" aria-describedby="fakeId2">div role equals image with aria-describedby</div>
             <p id="fakeId1">Fake ID 1</p>
             <p id="fakeId2">Fake ID 2</p>
-            <p><button alt="Invalid alt attrbute">Button with alt attribute</button></p>
+            <p>
+                <button alt="Invalid alt attrbute">Button with alt attribute</button>
+            </p>
             <p><a href="#" alt="Invalid alt attrbute">Link with alt attribute</a></p>
             <p><label alt="Invalid alt attrbute">Label with alt attribute</label></p>
         </main>

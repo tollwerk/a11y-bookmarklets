@@ -12,6 +12,16 @@ const css = {
     cursor: 'default'
 };
 const colors = { error: '#EB0000', success: 'lime' };
+const show = function show() {
+    if (document.querySelectorAll('.twa11y-toggle:checked').length == 0) {
+        this.style.display = 'inline';
+    }
+}
+const hide = function hide() {
+    if (document.querySelectorAll('.twa11y-toggle:checked').length == 0) {
+        this.style.display = 'none';
+    }
+}
 
 /**
  * Return whether an HTML element is a void element
@@ -113,19 +123,21 @@ class Info {
         this.el = el;
         this.pos = pos;
         this.str = (str || '').trim();
-        this.cls = `twa11y ${cls}`.trim();
+        this.cls = `twa11y ${cls || ''}`.trim();
         this.stl = (stl || '').trim();
         this.icn = icn || '🔍';
         this.opn = !!opn;
+        this.tgl = false;
     }
 
     /**
      * Create and return the info element
      *
+     * @param {Boolean} glb Make it a global bubble including a toggle
      * @returns {HTMLSpanElement}
      */
-    create() {
-        const info = document.createElement('button');
+    create(glb) {
+        const info = document.createElement(glb ? 'label' : 'button');
         if (this.cls.trim().length) {
             info.className = this.cls;
         }
@@ -139,20 +151,49 @@ class Info {
             info.setAttribute('style', style);
         }
         if (this.icn) {
-            info.innerHTML = this.icn;
-            const inner = document.createElement('span');
-            inner.innerHTML = this.str;
-            inner.style.marginLeft = '4px';
-            info.appendChild(inner);
-            if (!this.opn) {
-                inner.style.display = 'none';
-                info.addEventListener('focus', () => inner.style.display = 'inline');
-                info.addEventListener('mouseover', () => inner.style.display = 'inline');
-                info.addEventListener('blur', () => inner.style.display = 'none');
-                info.addEventListener('mouseout', () => inner.style.display = 'none');
+            if (glb) {
+                info.innerHTML = `${this.icn} ${this.str}`;
+            } else {
+                info.innerHTML = this.icn;
+                const inner = document.createElement('span');
+                inner.className = 'twa11y-details';
+                inner.innerHTML = this.str;
+                inner.style.marginLeft = '4px';
+                info.appendChild(inner);
+                if (!this.opn) {
+                    inner.style.display = 'none';
+                    info.addEventListener('focus', show.bind(inner));
+                    info.addEventListener('mouseover', show.bind(inner));
+                    info.addEventListener('blur', hide.bind(inner));
+                    info.addEventListener('mouseout', hide.bind(inner));
+                }
             }
         } else {
             info.innerHTML = this.str;
+        }
+        if (glb) {
+            info.appendChild(document.createTextNode(' — show all'))
+            const toggle = document.createElement('input');
+            toggle.className = 'twa11y-toggle';
+            toggle.setAttribute('type', 'checkbox');
+            toggle.style.margin = '0 0 0 4px';
+            toggle.style.verticalAlign = 'baseline';
+            toggle.addEventListener('change', function () {
+                Array.from(document.querySelectorAll('.twa11y-toggle')).forEach(t => {
+                    if (t !== this) {
+                        t.checked = this.checked;
+                    }
+                });
+                Array.from(document.querySelectorAll('.twa11y-details')).forEach(d => {
+                    d.style.display = this.checked ? 'inline' : 'none';
+                });
+            });
+            info.appendChild(toggle);
+        } else {
+            info.onclick = (e) => {
+                console.log(this.el);
+                return false;
+            };
         }
         if (this.pos === 0) {
             this.el.parentNode.insertBefore(info, this.el);
@@ -163,10 +204,6 @@ class Info {
         } else if (this.pos === 3) {
             this.el.appendChild(info);
         }
-        info.onclick = (e) => {
-            console.log(this.el);
-            return false;
-        };
         return info;
     }
 }
