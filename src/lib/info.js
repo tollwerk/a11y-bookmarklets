@@ -9,7 +9,8 @@ const css = {
     outline: '2px dotted #000',
     'outline-offset': '-3px',
     'border-width': 0,
-    cursor: 'default'
+    cursor: 'default',
+    'z-index': 2147483647
 };
 const colors = { error: '#EB0000', success: 'lime' };
 const show = function show() {
