@@ -26,8 +26,9 @@
             <p>The purpose of this bookmarklet is to identify form fields on the page (native elements and elements
                 with corresponding ARIA roles) and see whether they have a non-empty accessible name that can
                 be passed to assistive technology. The bookmarklet loosely aligns with the <a
-                    href="https://act-rules.github.io/rules/e086e5">ACT Rule
-                    e086e5</a> and its test cases. Shadow DOMs are examined recursively.</p>
+                    href="https://act-rules.github.io/rules/e086e5">ACT Rule e086e5</a> and its test cases. Shadow DOMs
+                are examined recursively. As a side benefit, the value if the form field's <code>autocomplete</code>
+                attribute is extracted as well (if present).</p>
             <p>The results are displayed visually on the page:</p>
             <ul>
                 <li>A green bubble (✔) indicates a PASS (non-empty accessible name)</li>
@@ -77,6 +78,10 @@
                 </div>
                 <div>
                     <div role="checkbox">ARIA-Checkbox with text content</div>
+                </div>
+                <div>
+                    <label for="input-11">Input 11 mit <code>autocomplete</code> attribute</label>
+                    <input type="text" id="input-11" autocomplete="given-name">
                 </div>
             </form>
         </main>
