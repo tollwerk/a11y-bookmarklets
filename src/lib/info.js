@@ -159,6 +159,7 @@ class Info {
                 const inner = document.createElement('span');
                 inner.className = 'twa11y-details';
                 inner.innerHTML = this.str;
+                inner.style.color = 'inherit';
                 inner.style.marginLeft = '4px';
                 info.appendChild(inner);
                 if (!this.opn) {

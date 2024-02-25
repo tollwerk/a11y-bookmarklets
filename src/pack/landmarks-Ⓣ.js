@@ -104,7 +104,7 @@ import { computeAccessibleName } from 'dom-accessibility-api';
                 const type = l.accName.length ? ((accNames[l.accName] > 1) ? WarningInfo : SuccessInfo) : ErrorInfo;
                 const info = (new type(l, 0, landmarkLabel(l), null, stl)).create();
                 l.style.outline = `2px solid ${info.style.backgroundColor}`;
-                l.landmarkStatus = l.accName.length ? ((accNames[l.accName] > 1) ? 'ok' : 'warning') : 'error';
+                l.landmarkStatus = l.accName.length ? ((accNames[l.accName] > 1) ? 'warning' : 'ok') : 'error';
             });
         }
     }
