@@ -23,10 +23,9 @@
                 please drag the link above to your browser bookmarks and call it from there. You can also click on the
                 link to run the bookmarklet on this very page.</p>
             <h2>Purpose &amp; Notes</h2>
-            <p>The purpose of this bookmarklet is to identify the presence of landmark regions in a document. Shadow
-                DOMs are examined recursively.</p>
+            <p>The purpose of this bookmarklet is to identify the presence of landmark regions in a document. </p>
             <p>The results are displayed visually on the page:</p>
-            <ul>
+            <ul id="status">
                 <li>A green bubble (✔) indicates an proper landmark region.</li>
                 <li>A red bubble (✖) indicates a landmark region which is missing an essential features, usually a
                     label.
@@ -36,7 +35,16 @@
                 </li>
             </ul>
             <p>Click on any of the info
-                bubbles to log the associated element to the DevTools console.</p>
+                bubbles to log the associated element to the DevTools console. In the DevTools log you will also see a
+                <strong>table of landmarks</strong> with the following details per landmark:</p>
+            <ul>
+                <li>The DOM node that generated the landmark</li>
+                <li>The landmark's role (implicit roles in parentheses)</li>
+                <li>The custom role description (if any; <code>aria-roledescription</code> attribute)</li>
+                <li>The landmark's label / accessible name</li>
+                <li>The landmark's context region (if any)</li>
+                <li>A textual representation of the landmark status (<a href="#status">see above</a>)</li>
+            </ul>
             <h2>Test bed</h2>
             <section aria-label="First named section">
                 <p>This is a first named section (using <code>aria-label</code>) which should become a region landmark.

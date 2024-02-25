@@ -50,10 +50,10 @@ import { computeAccessibleName } from 'dom-accessibility-api';
             roleCounter[landmark.roleName] = [landmark];
         }
         return {
+            node: landmark,
             role: landmark.hasAttribute('role') ? landmark.roleName : `(${landmark.roleName})`,
             roledesc: landmark.getAttribute('aria-roledescription'),
             accname: landmark.accName,
-            node: landmark,
             context: landmark.context,
             status: null
         };
