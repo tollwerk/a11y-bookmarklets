@@ -14,12 +14,27 @@ import { computeAccessibleName } from 'dom-accessibility-api';
     };
     const roleCounter = {};
 
+    const isElementVisible = function isElementVisible(element) {
+        if (element.offsetWidth === 0 || element.offsetHeight === 0) {
+            return false;
+        }
+        const computedStyle = window.getComputedStyle(element);
+        if (computedStyle.visibility === 'hidden') {
+            return false;
+        }
+        if (element.hasAttribute('hidden')) {
+            return false;
+        }
+        return true;
+    };
+
     // Find all landmark nodes
     const landmarkNodes = Array.from(d.querySelectorAll('header, main, footer, nav, aside, search,\n' +
         '[role="banner"], [role="main"], [role="contentinfo"], [role="navigation"], [role="complementary"],\n' +
         '[role="search"], [role="form"], [role="region"]:not([aria-label=""]), [role="region"]:not([aria-labelledby=""]),\n' +
         'section[aria-label]:not([aria-label=""]), section[aria-labelledby]:not([aria-labelledby=""]),\n' +
-        'article[aria-label]:not([aria-label=""]), article[aria-labelledby]:not([aria-labelledby=""])'));
+        'article[aria-label]:not([aria-label=""]), article[aria-labelledby]:not([aria-labelledby=""])'))
+        .filter(l => isElementVisible(l));
 
     // Filter out faux banner / complementary landmarks
     const landmarks = [];
