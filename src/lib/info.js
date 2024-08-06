@@ -5,7 +5,7 @@ const css = {
     'font-family': 'sans-serif',
     'font-size': 'small',
     'background-color': 'yellow',
-    padding: '5px',
+    padding: '5px 8px',
     outline: '2px dotted #000',
     'outline-offset': '-3px',
     'border-width': 0,
@@ -135,9 +135,10 @@ class Info {
      * Create and return the info element
      *
      * @param {Boolean} glb Make it a global bubble including a toggle
+     * @param {Boolean} tgl Create a global toggle
      * @returns {HTMLSpanElement}
      */
-    create(glb) {
+    create(glb, tgl) {
         const info = document.createElement(glb ? 'label' : 'button');
         if (this.cls.trim().length) {
             info.className = this.cls;
@@ -173,8 +174,8 @@ class Info {
         } else {
             info.innerHTML = this.str;
         }
-        if (glb) {
-            info.appendChild(document.createTextNode(' — show all'))
+        if (glb && tgl) {
+            info.appendChild(document.createTextNode(' — show all'));
             const toggle = document.createElement('input');
             toggle.className = 'twa11y-toggle';
             toggle.setAttribute('type', 'checkbox');
@@ -196,6 +197,10 @@ class Info {
                 console.log(this.el);
                 return false;
             };
+        }
+        if (glb) {
+            info.className += ' twa11y-glb';
+            document.querySelectorAll('.twa11y-glb').forEach(g => g.remove());
         }
         if (this.pos === 0) {
             this.el.parentNode.insertBefore(info, this.el);

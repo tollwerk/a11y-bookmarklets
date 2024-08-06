@@ -1,4 +1,4 @@
-import { ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } from '../lib/info';
+import { ErrorInfo, Info, reset, SuccessInfo, WarningInfo } from '../lib/info';
 import { computeAccessibleName } from 'dom-accessibility-api';
 
 (function iefe(d, s) {
@@ -111,6 +111,17 @@ import { computeAccessibleName } from 'dom-accessibility-api';
     table.forEach(row => {
         row.status = row.node.landmarkStatus;
     });
-    (new Info(d.documentElement, 2, `Landmark regions found on page: ${table.length} (see DevTools for details)`, null, stl)).create(true);
-    console.table(table);
+
+    let msg;
+    let type;
+    if (!table.length) {
+        type = Info;
+        msg = 'No landmark regions found on page';
+    } else {
+        type = SuccessInfo;
+        msg = `Landmark regions found on page: ${table.length} (see DevTools)`;
+        console.table(table);
+    }
+
+    (new type(d.body, 2, msg, null, 'position:fixed;top:0;left:0')).create(true, true);
 }(document, 'setAttribute'));

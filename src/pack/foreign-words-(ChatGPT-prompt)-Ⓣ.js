@@ -1,7 +1,7 @@
 import { ErrorInfo, SuccessInfo } from "../lib/info";
 
 (function iefe(d) {
-    const stl = 'position:absolute';
+    const stl = 'position:fixed;top:0;left:0';
 
     function removeDuplicateWords(str) {
         // Split the string into words
@@ -16,13 +16,16 @@ import { ErrorInfo, SuccessInfo } from "../lib/info";
 
     async function copyToPrompt() {
         try {
-            const text = `Finde alle fremdsprachigen, nicht-deutschen Begriffe in folgendem Text, die keine Eigennamen sind und nicht bereits in den deutschen Sprachgebrauch eingegangen und somit eingedeutscht sind, und liste sie gruppiert nach Sprache auf:\n\n${removeDuplicateWords(document.body.innerText.replace(/\s+/gi, ' '))}`;
+            const text = `Finde alle fremdsprachigen, nicht-deutschen Begriffe in folgendem Text, die keine Eigennamen sind und nicht bereits in den deutschen Sprachgebrauch eingegangen und somit eingedeutscht sind, und liste sie gruppiert nach Sprache auf. Liefere keine Erklärung.\n\n${removeDuplicateWords(document.body.innerText.replace(/\s+/gi, ' '))}`;
             await navigator.clipboard.writeText(text)
-                .then(res => (new SuccessInfo(d.documentElement, 2, `Copied page text to clipboard (ChatGPT prompt)`, null, stl)).create(true))
-                .catch(res => (new ErrorInfo(d.documentElement, 2, `Failed to copy page text / prompt to clipboard`, null, stl)).create(true));
+                .then(res => {
+                    console.log(text);
+                    (new SuccessInfo(d.body, 2, `Copied page text to clipboard and console (ChatGPT prompt)`, null, stl)).create(true);
+                })
+                .catch(res => (new ErrorInfo(d.body, 2, `Failed to copy page text / prompt to clipboard`, null, stl)).create(true));
             ;
         } catch (err) {
-            (new ErrorInfo(d.documentElement, 2, `Failed to copy page text / prompt to clipboard`, null, stl)).create(true);
+            (new ErrorInfo(d.body, 2, `Failed to copy page text / prompt to clipboard`, null, stl)).create(true);
         }
     }
 

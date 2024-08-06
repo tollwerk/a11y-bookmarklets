@@ -1,3 +1,4 @@
+import { SuccessInfo } from '../lib/info';
 (function iefe(d) {
     const ua = navigator.userAgent.toLowerCase();
     const iepos = ua.indexOf('msie');
@@ -20,4 +21,5 @@
     } else {
         d.attachEvent('onfocusin', styleFocus);
     }
+    (new SuccessInfo(d.body, 2, 'Tab focus display has been enabled', null, 'position:fixed;top:0;left:0')).create(true);
 }(document));

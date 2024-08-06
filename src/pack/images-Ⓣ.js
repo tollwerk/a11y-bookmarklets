@@ -111,5 +111,7 @@ import { colors, ErrorInfo, Info, recurse, reset, SuccessInfo, WarningInfo } fro
         }
     }
     const images = recurse(labelImages, 'img, [role=img]');
-    (new Info(d.documentElement, 2, `Images found on page: ${images}`, null, stl)).create(true);
+    const msg = images ? `Images found on page: ${images}` : 'No images found on page';
+    const type = images ? SuccessInfo : Info;
+    (new type(d.body, 2, msg, null, 'position:fixed;top:0;left:0')).create(true, !!images);
 }(document, 'hasAttribute', 'getAttribute', 'setAttribute'));
